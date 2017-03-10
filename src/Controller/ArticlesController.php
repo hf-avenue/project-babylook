@@ -4,6 +4,7 @@
  * User: user
  * Date: 2017/03/10
  * Time: 16:12
+ * 投稿記事入出力
  */
 
 namespace App\Controller;
@@ -11,14 +12,15 @@ namespace App\Controller;
 use App\Controller\AppController;
 
 class ArticlesController extends AppController {
+    // 一覧表示
     public function index($user_id = null)
     {
-
+        // 全ユーザー投稿記事
         if ($user_id == null)
         {
             $articles = $this->Articles->find('all');
         } else {
-
+        // ユーザーIDでソート
             $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
         }
 
