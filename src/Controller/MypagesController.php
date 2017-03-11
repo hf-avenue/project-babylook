@@ -13,25 +13,17 @@ use App\Controller\AppController;
 
 class MypagesController extends AppController {
     // 一覧表示
-    public function index($user_id = null)
+    public function index()
     {
+        // ログイン中のユーザーID取得 TODO:共通関数化
+        $user_id = $this->Auth->user('id');
+
+        // ここから各モデルをロード
         $this->loadModel('Articles');
-        // 全ユーザー投稿記事
-        if ($user_id == null)
-        {
-            $articles = $this->Articles->find('all');
-        } else {
+
         // ユーザーIDでソート
-            $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
-        }
-
+        $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
         $this->set(compact('articles'));
-    }
-
-    public function view($id = null)
-    {
-        $article = $this->Articles->get($id);
-        $this->set(compact('article'));
     }
 
     public function add()
