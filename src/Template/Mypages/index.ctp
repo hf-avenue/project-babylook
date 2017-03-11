@@ -4,6 +4,10 @@
 <?= $this->Html->link('Add Article', ['action' => 'add']) ?>
 <table>
     <tr>
+        <th>あなたがイイネされた回数は</th>
+        <th><?=$my_score ?>回です</th>
+    </tr>
+    <tr>
         <th>Id</th>
         <th>投稿者Id</th>
         <th>作品Title</th>
