@@ -20,10 +20,24 @@ class MypagesController extends AppController {
 
         // ここから各モデルをロード
         $this->loadModel('Articles');
+        $this->loadModel('Scores');
 
-        // ユーザーIDでソート
+        // ログインユーザーIDで投稿をソート
         $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
         $this->set(compact('articles'));
+
+        // ログインユーザーIDでスコアを集計
+        $score_query = $this->Scores->find('all', array('conditions'=>array('Scores.target_user_id' => $user_id)));
+        $my_score = $score_query->count();
+        $this->set('my_score',$my_score);
+
+    }
+
+    public function view($id = null)
+    {
+        $this->loadModel('Articles');
+        $article = $this->Articles->get($id);
+        $this->set(compact('article'));
     }
 
     public function add()
