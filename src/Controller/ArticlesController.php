@@ -20,7 +20,7 @@ class ArticlesController extends AppController {
         {
             $articles = $this->Articles->find('all');
         } else {
-        // ユーザーIDでソート
+
             $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
         }
 
