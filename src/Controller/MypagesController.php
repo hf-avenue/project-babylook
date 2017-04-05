@@ -13,10 +13,23 @@ use App\Controller\AppController;
 
 class MypagesController extends AppController {
     // 一覧表示
+
+
+
+
+
     public function index()
     {
-        // ログイン中のユーザーID取得 TODO:共通関数化
+        // ログインチェック
         $user_id = $this->Auth->user('id');
+        if ($user_id ==null)
+        {
+            return $this->redirect($this->Auth->redirectUrl('/users/login'));
+        }
+
+
+
+
 
         // ここから各モデルをロード
         $this->loadModel('Articles');
