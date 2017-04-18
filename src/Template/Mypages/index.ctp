@@ -1,7 +1,7 @@
 <meta charset="UTF-8"/>
 
 <h1>Babylook Portal2 proto type system</h1>
-<?= $this->Html->link('Add Article', ['action' => 'add']) ?>
+<?= $this->Html->link('Add Article', ['controller' =>'articles' ,'action' => 'add']) ?>
 <table>
     <tr>
         <th>あなたがイイネされた回数は</th>
