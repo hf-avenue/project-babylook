@@ -31,6 +31,7 @@ class ArticlesController extends AppController {
     public function view($id = null)
     {
         $article = $this->Articles->get($id);
+
         $this->set(compact('article'));
     }
 
@@ -41,19 +42,22 @@ class ArticlesController extends AppController {
             $article = $this->Articles->patchEntity($article, $this->request->getData());
             // 投稿者IDを追記
             $article->user_id = $this->Auth->user('id');
-            // ファイル名を転送 todo:rename
+            // ファイル情報取得
+            $file_status = $article->img;
+            // 画像種別を追記
+            $img_ext = pathinfo($file_status['name'], PATHINFO_EXTENSION);
+            $article->img_ext = $img_ext;
+            // 画像ユニーク名称を追記
 
 
-$file_status = $article->img;
-
-            move_uploaded_file($file_status['tmp_name'], WWW_ROOT."/img/deliverable/" .$file_status['name']);
-
-
-
-
-
-
-
+            $uniq_name = md5(uniqid(rand(), 1)).'.'.$img_ext;
+            $article->img_name = $uniq_name;
+            // 画像の元名称を追記
+            $article->original_name = $file_status['name'];
+            // 画像サイズを追記
+            $article->img_size = $file_status['size'];
+            // ファイルをユニーク名称で転送
+            move_uploaded_file($file_status['tmp_name'], WWW_ROOT."/img/deliverable/".$uniq_name);
 
 
             if ($this->Articles->save($article)) {
