@@ -3,9 +3,9 @@
 <br/>
 <div>
 
-<?php $image_name = $article->img_name;   ?>
-
-    <?php echo $this->Html->image('/img/deliverable/'.$image_name); ?>
+<?php $image_number = $article->image_number;   ?>
+<?php $image_ext = $article->img_ext;   ?>
+<?php echo $this->Html->image('/img/deliverable/'.$image_number.".".$image_ext); ?>
 
 
 
