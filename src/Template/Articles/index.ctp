@@ -16,10 +16,9 @@
         <th>Id</th>
         <th>投稿者Id</th>
         <th>作品Title</th>
+        <th>サムネイル</th>
         <th>Created</th>
     </tr>
-
-
 
     <?php foreach ($articles as $article): ?>
         <tr>
@@ -28,6 +27,15 @@
             <td>
                 <?= $this->Html->link($article->title, ['action' => 'view', $article->id]) ?>
             </td>
+            <td>
+
+                <?php $image_number = $article->image_number;   ?>
+                <?php if ($image_number > 0){
+                    echo ($this->Html->image('/img/thumbnail/'.$image_number.".png"));
+                }; ?>
+
+            </th>
+
             <td>
                 <?= $article->created->format(DATE_RFC850) ?>
             </td>

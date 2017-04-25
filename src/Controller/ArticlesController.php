@@ -48,20 +48,24 @@ class ArticlesController extends AppController {
             $article->user_id = $this->Auth->user('id');
             // オリジナルファイル情報取得
             $file_status = $article->img;
+
             // 画像種別を追記
             $img_ext = pathinfo($file_status['name'], PATHINFO_EXTENSION);
+
+
+
+
             $article->img_ext = $img_ext;
-            // 画像連番作成
+
+            // 画像ユニーク連番作成
             $image_number = md5(uniqid(rand(), 1));
-            // 画像ユニーク名称を追記
-            $uniq_name =$image_number.'.'.$img_ext;
-            $article->img_name = $uniq_name;
+            $article->image_number = $image_number;
             // 画像の元名称を追記
             $article->original_name = $file_status['name'];
             // 画像サイズを追記
             $article->img_size = $file_status['size'];
             // オリジナルファイル転送先を設定
-            $image_upload_path = WWW_ROOT."img/deliverable/".$uniq_name;
+            $image_upload_path = WWW_ROOT."img/deliverable/".$image_number.".".$img_ext;
             // オリジナルファイルをユニーク名称で転送
             move_uploaded_file($file_status['tmp_name'], $image_upload_path);
 
