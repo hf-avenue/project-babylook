@@ -37,11 +37,12 @@ CREATE TABLE `articles` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `img_name` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'ユニークなファイル名',
+  `image_number` text CHARACTER SET utf8 COMMENT 'ユニークなイメージ番号',
   `img_ext` varchar(12) CHARACTER SET utf8 DEFAULT NULL COMMENT '拡張子',
-  `img_size` int(11) DEFAULT NULL COMMENT '容量',
+  `img_size` int(11) unsigned DEFAULT NULL COMMENT '容量',
+  `original_name` text COLLATE utf8_unicode_ci COMMENT '元々のファイル名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -50,7 +51,6 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
-INSERT INTO `articles` VALUES (1,'あ','ああああ','2017-03-09 02:06:22',NULL,1,NULL,NULL,NULL),(2,'い','いいいい','2017-03-09 02:06:22',NULL,1,NULL,NULL,NULL),(3,'う','ううううう','2017-03-09 02:06:22',NULL,1,NULL,NULL,NULL),(4,'テスト投稿','テスト投稿from\r\nrootアカウント','2017-03-09 02:06:22',NULL,1,NULL,NULL,NULL),(5,'テスト投稿','テスト投稿from\r\nrootアカウント','2017-03-09 02:06:22',NULL,1,NULL,NULL,NULL),(6,'テスト投稿3','その３だよ<BR>これでOK？','2017-03-10 08:47:33','2017-03-10 08:47:33',1,NULL,NULL,NULL),(8,'テスト４','テスト４だよ\r\n','2017-03-10 08:59:10','2017-03-10 08:59:10',1,NULL,NULL,NULL),(9,'サキの投稿','これだよ','2017-03-10 09:14:39','2017-03-10 09:14:39',2,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1350,4 +1350,4 @@ USE `test`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-18 23:35:19
+-- Dump completed on 2017-04-25 23:14:48
