@@ -30,7 +30,8 @@
             <td>
 
                 <?php $image_number = $article->image_number;   ?>
-                <?php if ($image_number > 0){
+
+                <?php if ($image_number != null){
                     echo ($this->Html->image('/img/thumbnail/'.$image_number.".png"));
                 }; ?>
 
