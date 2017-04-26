@@ -51,10 +51,6 @@ class ArticlesController extends AppController {
 
             // 画像種別を追記
             $img_ext = pathinfo($file_status['name'], PATHINFO_EXTENSION);
-
-
-
-
             $article->img_ext = $img_ext;
 
             // 画像ユニーク連番作成
