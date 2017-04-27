@@ -127,6 +127,7 @@ class ArticlesController extends AppController {
 
     public function vote($articles_id = null)
     {
+        // 画面表示は行わない
         $this->autoRender = false;
         // ログインチェック
         $user_id = $this->Auth->user('id');

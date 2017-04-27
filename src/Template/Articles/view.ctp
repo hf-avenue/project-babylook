@@ -2,31 +2,11 @@
 <p>コンテンツ内容：<?= h($article->body) ?></p>
 <br/>
 <?php echo $this->Html->script('jquery-3.2.1.min.js'); ?>
-<script>
-
-    $(function() {
-        $('#<?= $article->id;?>').click (function () {
-            $(this).text("押された");
-            alert("押された");
-            $.ajax({
-                url: "../vote/<?= $article->id;?>",
-                type: "post",
-                dataType: "html"
-            }).done(function (response) {
-                $("#tag").html(response);
-                alert("success");
-            }).fail(function () {
-                alert("failed");
-            });
-        });
-    });
 
 
-</script>
 
-
-<div><?php echo $this->Html->image('Like_32.png', ['id'=>$article->id] ); ?></div>
-
+<div><?php echo $this->Html->image('gj_before.png', ['id'=>$article->id, 'alt' =>'イイネ' ]); ?></div>
+<div><?php echo $this->Html->image('gj_after.png', ['id'=>'x', 'alt' =>'イイネ' ]); ?></div>
 <div>
 
 <?php $image_number = $article->image_number;   ?>
@@ -37,6 +17,28 @@
 
 </div>
 
+
+<script>
+    document.getElementById("x").style.display="none";
+    $(function() {
+
+        $('#<?= $article->id;?>').click (function () {
+            alert("イイネを押しました");
+            $.ajax({
+                url: "../vote/<?= $article->id;?>",
+                type: "post",
+                dataType: "html"
+            }).done(function() {
+                alert("成功しました");
+                document.getElementById("<?= $article->id;?>").style.display="none";
+                document.getElementById("x").style.display="block";
+            });
+        });
+    });
+
+
+</script>
+
 <p><small>Created: <?= $article->created->format(DATE_RFC850) ?></small></p>
-<div><a href=../vote/ <?php  $article->id  ?> >    イイネ！  <?php echo $this->Html->image('Like_32.png'); ?></a></div>
+
 
