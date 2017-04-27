@@ -14,6 +14,14 @@ use Cake\Routing\Router;
 
 
 class ArticlesController extends AppController {
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('RequestHandler');
+    }
+
+
     // 一覧表示
     public function index($user_id = null)
     {
@@ -114,42 +122,49 @@ class ArticlesController extends AppController {
      * @return \Cake\Network\Response|null
      */
 
+
+
+
     public function vote($articles_id = null)
     {
+        $this->autoRender = false;
         // ログインチェック
         $user_id = $this->Auth->user('id');
         if ($user_id ==null)
         {
             return $this->redirect($this->Auth->redirectUrl('/users/login'));
         }
-        // ここから別モデルをロード
-        $this->loadModel('Scores');
+        // postなら投票ロジック起動
 
-        // エンティティ生成
-        $scores = $this->Scores->newEntity();
+        if ($this->request->is('post')){
+            // ここから別モデルをロード
+            $this->loadModel('Scores');
 
-        // 時刻セット
-        $timestamp = date('Y-m-d H:i:s');
-        $scores->created = $timestamp;
+            // エンティティ生成
+            $scores = $this->Scores->newEntity();
+
+            // 時刻セット
+            $timestamp = date('Y-m-d H:i:s');
+            $scores->created = $timestamp;
 
 
-        // 有効な投稿作品IDであるか確認
-        $articles = $this->Articles->find()->where(['Articles.id' => $articles_id])->first();
-        if ($articles==null){
-            return false;
+            // 有効な投稿作品IDであるか確認
+            $articles = $this->Articles->find()->where(['Articles.id' => $articles_id])->first();
+            if ($articles==null){
+                return false;
+            }
+
+            // 作品ID、評価者ID、投票者IDをセット
+            $scores->exam_user_id = $articles['user_id'];
+            $scores->target_user_id = $articles['user_id'];
+            $scores->articles_id =  $articles['id'];
+
+            // 保存するよ
+            if ($this->Scores->save($scores)) {
+                $this->Flash->success(__('投票ありがとうございます'));
+            }
         }
 
-        // 作品ID、評価者ID、投票者IDをセット
-        $scores->exam_user_id = $articles['user_id'];
-        $scores->target_user_id = $articles['user_id'];
-        $scores->articles_id =  $articles['id'];
-
-        // 保存するよ
-
-        if ($this->Scores->save($scores)) {
-            $this->Flash->success(__('投票ありがとうございます'));
-            return $this->redirect(['action' => 'index']);
-        }
         $this->Flash->error(__('不正な投票です'));
 
 

@@ -1,8 +1,31 @@
 <h1>タイトル：<?= h($article->title) ?></h1>
 <p>コンテンツ内容：<?= h($article->body) ?></p>
 <br/>
+<?php echo $this->Html->script('jquery-3.2.1.min.js'); ?>
+<script>
 
-<div><a href=../vote/<?= $article->id;?> >    イイネ！  <?php echo $this->Html->image('Like_32.png'); ?></a></div>
+    $(function() {
+        $('#<?= $article->id;?>').click (function () {
+            $(this).text("押された");
+            alert("押された");
+            $.ajax({
+                url: "../vote/<?= $article->id;?>",
+                type: "post",
+                dataType: "html"
+            }).done(function (response) {
+                $("#tag").html(response);
+                alert("success");
+            }).fail(function () {
+                alert("failed");
+            });
+        });
+    });
+
+
+</script>
+
+
+<div><?php echo $this->Html->image('Like_32.png', ['id'=>$article->id] ); ?></div>
 
 <div>
 

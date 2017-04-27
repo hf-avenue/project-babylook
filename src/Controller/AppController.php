@@ -52,6 +52,8 @@ class AppController extends Controller
 
             ]
         ]);
+        $this->loadComponent('RequestHandler');
+
 /*
         parent::initialize();
 
