@@ -26,22 +26,27 @@ class ArticlesTable extends Table {
             ->requirePresence('title')
             ->notEmpty('body')
             ->requirePresence('body');
-        // 画像フォーマットチェック20170421
+
+        // 画像フォーマットチェック20170427
         $validator
-            ->allowEmpty('img_ext')
-            ->add('img_ext', ['list' => [
-                'rule' => ['inList', ['jpg','jpeg', 'png', 'gif']],
-                'message' => '投稿可能な画像はjpg, png, gif のみアップロード可能です.',
-            ]]);
-        // 画像フォーマットチェック20170421
+            ->add('img',[
+                'mimeType' => [
+                    'rule' => array('mimeType', array('image/gif', 'image/png', 'image/jpg', 'image/jpeg')),
+                    'message' => '投稿可能な画像はjpg, png, gif のみです',
+                    'allowEmpty' => TRUE,
+                ],
+            ] );
+
+        // 画像サイズチェック20170421
         $validator
-            ->integer('img_size')
-            ->allowEmpty('img_size')
-            ->add('img_size', 'comparison', [
-                'rule' => ['comparison', '<', 10485760],
-                'message' => 'ファイルが大きすぎます(MaxSize:10M)',
-            ]);
+            ->add('img',[
+                'fileSize' => [
+                    'rule' => array('fileSize', 'isless', '10MB'),
+                    'message' => '投稿可能なサイズは10MB以下のみです',
+                    'allowEmpty' => TRUE,
+                ],
+            ] );
         return $validator;
-    }
+    } // 'fileSize', '<=', '10MB'
 
 }
