@@ -27,22 +27,28 @@ class MypagesController extends AppController {
             return $this->redirect($this->Auth->redirectUrl('/users/login'));
         }
 
-
-
-
-
         // ここから各モデルをロード
         $this->loadModel('Articles');
         $this->loadModel('Scores');
+        $this->loadModel('Trophies');
 
         // ログインユーザーIDで投稿をソート
         $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
         $this->set(compact('articles'));
 
-        // ログインユーザーIDでスコアを集計
+        // ログインユーザーIDでイイネされたスコアを集計
         $score_query = $this->Scores->find('all', array('conditions'=>array('Scores.target_user_id' => $user_id)));
         $my_score = $score_query->count();
         $this->set('my_score',$my_score);
+
+        // ログインユーザーIDに対してイイネしたスコアを集計
+        $exam_query = $this->Scores->find('all', array('conditions'=>array('Scores.exam_user_id' => $user_id)));
+        $exam_score = $exam_query->count();
+        $this->set('exam_score', $exam_score);
+
+        // トロフィー一覧を取得
+        $trophies = $this->Trophies->find('all');
+        $this->set('trophies',$trophies);
 
     }
 

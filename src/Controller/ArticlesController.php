@@ -156,7 +156,7 @@ class ArticlesController extends AppController {
             }
 
             // 作品ID、評価者ID、投票者IDをセット
-            $scores->exam_user_id = $articles['user_id'];
+            $scores->exam_user_id = $user_id;
             $scores->target_user_id = $articles['user_id'];
             $scores->articles_id =  $articles['id'];
 
