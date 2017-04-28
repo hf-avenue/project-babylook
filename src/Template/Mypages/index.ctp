@@ -14,6 +14,15 @@
     </tr>
 
 
+    <tr>
+        <th>当サイトで用意された実績は</th>
+    </tr>
+
+    <?php foreach ($trophies as $trophie): ?>
+    <tr>
+        <td><?= $trophie->trophie_name ?></td>
+    </tr>
+    <?php endforeach; ?>
 
     <tr>
         <th>Id</th>
@@ -21,6 +30,26 @@
         <th>作品Title</th>
         <th>Created</th>
     </tr>
+
+    <tr>
+        <th>貴方が解除した実績は</th>
+
+    </tr>
+
+    <!--$my_scoreと$exam_score両方上回ったトロフィーのみ出すことにするロジック(他で使うときは、layout内のctpに移植) -->
+    <?php foreach ($trophies as $trophie): ?>
+        <tr>
+            <td><?php if($exam_score >= $trophie->give_score && $my_score >= $trophie->take_score){
+                    echo "ID:". $trophie->id;
+                    echo $trophie->trophie_name;
+                }
+                ?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    <!-- ここまで -->
+
+
 
 
 
