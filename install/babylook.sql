@@ -42,7 +42,7 @@ CREATE TABLE `articles` (
   `img_size` int(11) unsigned DEFAULT NULL COMMENT '容量',
   `original_name` text COLLATE utf8_unicode_ci COMMENT '元々のファイル名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,6 +51,7 @@ CREATE TABLE `articles` (
 
 LOCK TABLES `articles` WRITE;
 /*!40000 ALTER TABLE `articles` DISABLE KEYS */;
+INSERT INTO `articles` VALUES (1,'投稿1','2','2017-04-28 13:51:36','2017-04-28 13:51:36',1,'445ae8f8dc7e1353a7f64fdac87eb552','jpg',30916,'02.jpg');
 /*!40000 ALTER TABLE `articles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,10 +67,10 @@ CREATE TABLE `scores` (
   `exam_user_id` int(10) unsigned NOT NULL,
   `target_user_id` int(10) unsigned NOT NULL,
   `articles_id` int(10) unsigned NOT NULL,
-  `created` datetime NOT NULL,
+  `created` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `exam_user_id` (`exam_user_id`,`target_user_id`,`articles_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='イイネされた時のログ';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='イイネされた時のログ';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,8 +79,34 @@ CREATE TABLE `scores` (
 
 LOCK TABLES `scores` WRITE;
 /*!40000 ALTER TABLE `scores` DISABLE KEYS */;
-INSERT INTO `scores` VALUES (1,2,1,1,'2017-03-11 08:59:10'),(2,2,1,5,'2017-03-11 10:59:10'),(3,1,2,9,'2017-03-10 11:00:20');
+INSERT INTO `scores` VALUES (1,2,1,1,NULL),(2,2,1,1,NULL),(3,2,1,1,NULL),(4,2,1,1,NULL),(5,2,1,1,NULL),(6,1,1,1,NULL),(7,1,1,1,NULL),(8,1,1,1,NULL),(9,1,1,1,NULL),(10,1,1,1,NULL);
 /*!40000 ALTER TABLE `scores` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `trophies`
+--
+
+DROP TABLE IF EXISTS `trophies`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `trophies` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '連番',
+  `give_score` int(11) DEFAULT NULL COMMENT 'イイネを与えた回数',
+  `take_score` int(11) DEFAULT NULL COMMENT 'イイネを貰った回数',
+  `trophie_name` varchar(64) CHARACTER SET utf8 DEFAULT NULL COMMENT 'トロフィーの名称',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='トロフィーの種類を管理するマスターテーブル';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `trophies`
+--
+
+LOCK TABLES `trophies` WRITE;
+/*!40000 ALTER TABLE `trophies` DISABLE KEYS */;
+INSERT INTO `trophies` VALUES (1,5,0,'レビュアーLv1'),(2,0,5,'クリエイターLv1'),(3,5,5,'アクティブユーザーLv1');
+/*!40000 ALTER TABLE `trophies` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1350,4 +1377,4 @@ USE `test`;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-25 23:14:48
+-- Dump completed on 2017-04-28 23:07:47
