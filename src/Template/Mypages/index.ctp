@@ -7,6 +7,12 @@
         <th>あなたがイイネされた回数は</th>
         <th><?=$my_score ?>回です</th>
     </tr>
+
+    <tr>
+        <th>あなたがイイネした回数は</th>
+        <th><?=$exam_score ?>回です</th>
+    </tr>
+
     <tr>
         <th>Id</th>
         <th>投稿者Id</th>
