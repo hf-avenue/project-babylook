@@ -13,11 +13,7 @@ use App\Controller\AppController;
 
 class MypagesController extends AppController {
     // 一覧表示
-
-
-
-
-
+    
     public function index()
     {
         // ログインチェック
@@ -27,7 +23,7 @@ class MypagesController extends AppController {
             return $this->redirect($this->Auth->redirectUrl('/users/login'));
         }
 
-        // ここから各モデルをロード
+        // ここから各モデルをロード　(トロフィーを基準にした処理が必要ならここから先のロジックをコピーするか共通化)
         $this->loadModel('Articles');
         $this->loadModel('Scores');
         $this->loadModel('Trophies');
@@ -49,6 +45,8 @@ class MypagesController extends AppController {
         // トロフィー一覧を取得
         $trophies = $this->Trophies->find('all');
         $this->set('trophies',$trophies);
+
+        // ここまで
 
     }
 
