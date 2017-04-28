@@ -162,11 +162,11 @@ class ArticlesController extends AppController {
 
             // 保存するよ
             if ($this->Scores->save($scores)) {
-                $this->Flash->success(__('投票ありがとうございます'));
+                // $this->Flash->success(__('投票ありがとうございます'));
             }
         }
 
-        $this->Flash->error(__('不正な投票です'));
+        // $this->Flash->error(__('不正な投票です'));
 
 
 

@@ -13,6 +13,8 @@
         <th><?=$exam_score ?>回です</th>
     </tr>
 
+
+
     <tr>
         <th>Id</th>
         <th>投稿者Id</th>
