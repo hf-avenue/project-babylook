@@ -21,7 +21,7 @@
             <td><?= $article->id ?></td>
             <td><?= $article->user_id ?></td>
             <td>
-                <?= $this->Html->link($article->title, ['action' => 'view', $article->id]) ?>
+                <?= $this->Html->link($article->title, ['controller' =>'articles' ,'action' => 'view', $article->id]) ?>
             </td>
             <td>
                 <?= $article->created->format(DATE_RFC850) ?>
