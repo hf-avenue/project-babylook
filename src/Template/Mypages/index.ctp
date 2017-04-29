@@ -36,7 +36,7 @@
 
     </tr>
 
-    <!--$my_scoreと$exam_score両方上回ったトロフィーのみ出すことにするロジック(他で使うときは、layout内のctpに移植) -->
+    <!--$my_scoreと$exam_score両方上回ったトロフィーのみ出すことにするロジック -->
     <?php foreach ($trophies as $trophie): ?>
         <tr>
             <td><?php if($exam_score >= $trophie->give_score && $my_score >= $trophie->take_score){
@@ -49,10 +49,7 @@
     <?php endforeach; ?>
     <!-- ここまで -->
 
-
-
-
-
+    <!-- 自作投稿 -->
     <?php foreach ($articles as $article): ?>
         <tr>
             <td><?= $article->id ?></td>
@@ -65,4 +62,5 @@
             </td>
         </tr>
     <?php endforeach; ?>
+    <!-- ここまで -->
 </table>
