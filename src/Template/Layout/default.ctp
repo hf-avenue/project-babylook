@@ -47,10 +47,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             </ul>
         </div>
     </nav>
+
+    <!-- 全ページ共通メニュー呼び出し Element/Commonからmenu.ctpを共通パーツとして呼び出す -->
+    <?= $this->element('Common/menu'); ?>
+    <!-- ここまで -->
+
     <?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
     </div>
+
+
+
+
     <footer>
     </footer>
 </body>
