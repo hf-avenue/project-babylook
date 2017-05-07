@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 
+
 class MypagesController extends AppController {
     // 一覧表示
     
@@ -23,10 +24,18 @@ class MypagesController extends AppController {
             return $this->redirect($this->Auth->redirectUrl('/users/login'));
         }
 
+
+
         // ここから各モデルをロード　(トロフィーを基準にした処理が必要ならここから先のロジックをコピーするか共通化)
         $this->loadModel('Articles');
         $this->loadModel('Scores');
         $this->loadModel('Trophies');
+        $this->loadModel('Users');
+
+        // ユーザー名取得
+        $users = $this->Users->find('all', array('conditions' => array('Users.id' =>$user_id)));
+        $row = $users->first();
+        $this->set('users',$row);
 
         // ログインユーザーIDで投稿をソート
         $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
