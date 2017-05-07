@@ -1,6 +1,15 @@
 <meta charset="UTF-8"/>
 
 <h1>Babylook Portal2 proto type system</h1>
+
+<table>
+    <tr>
+        <th>あなたの名前：<?= $users->username ?></th>
+    </tr>
+    <tr>
+        <th><?= $this->Html->image('/img/default_icon.jpg'); ?></th>
+    </tr>
+
 <?= $this->Html->link('Add Article', ['controller' =>'articles' ,'action' => 'add']) ?>
 <table>
     <tr>
@@ -28,6 +37,7 @@
         <th>Id</th>
         <th>投稿者Id</th>
         <th>作品Title</th>
+        <th>サムネイル</th>
         <th>Created</th>
     </tr>
 
@@ -57,6 +67,17 @@
             <td>
                 <?= $this->Html->link($article->title, ['controller' =>'articles' ,'action' => 'view', $article->id]) ?>
             </td>
+
+            <td>
+
+                <?php $image_number = $article->image_number;   ?>
+
+                <?php if ($image_number != null){
+                    echo ($this->Html->image('/img/thumbnail/'.$image_number.".png"));
+                }; ?>
+
+            </th>
+
             <td>
                 <?= $article->created->format(DATE_RFC850) ?>
             </td>
