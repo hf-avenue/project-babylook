@@ -35,7 +35,6 @@
 
     <tr>
         <th>Id</th>
-        <th>投稿者Id</th>
         <th>作品Title</th>
         <th>サムネイル</th>
         <th>Created</th>
@@ -63,7 +62,6 @@
     <?php foreach ($articles as $article): ?>
         <tr>
             <td><?= $article->id ?></td>
-            <td><?= $article->user_id ?></td>
             <td>
                 <?= $this->Html->link($article->title, ['controller' =>'articles' ,'action' => 'view', $article->id]) ?>
             </td>

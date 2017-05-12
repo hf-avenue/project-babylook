@@ -15,6 +15,8 @@ class ArticlesTable extends Table {
 
     public function initialize(array $config)
     {
+        // UsersテーブルのidとArticlesテーブルのuser_idは結合の為のキー
+        $this->belongsTo('Users')->setForeignKey('user_id')->setJoinType('INNER');
         $this->addBehavior('Timestamp');
     }
 

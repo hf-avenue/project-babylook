@@ -28,20 +28,24 @@ class ArticlesController extends AppController {
         // 全ユーザー投稿記事
         if ($user_id == null)
         {
-            $articles = $this->Articles->find('all');
+            $articles = $this->Articles->find('all')->contain(['Users']);
+
         } else {
-
-            $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
+            $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)))->contain(['Users']);
         }
-
         $this->set(compact('articles'));
     }
 
     public function view($id = null)
     {
         $article = $this->Articles->get($id);
+        $user_id =$article->user_id;
+        $user = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id)))->contain(['Users']);
+        $user =$user->first();
+        $this->set(compact('article', 'user'));
 
-        $this->set(compact('article'));
+
+
     }
 
     /**
