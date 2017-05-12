@@ -15,6 +15,7 @@
     <tr>
         <th>Id</th>
         <th>投稿者Id</th>
+        <th>投稿者名</th>
         <th>作品Title</th>
         <th>サムネイル</th>
         <th>Created</th>
@@ -24,6 +25,7 @@
         <tr>
             <td><?= $article->id ?></td>
             <td><?= $this->Html->link($article->user_id,['controller' =>'users' ,'action' => 'profile', $article->user_id]) ?></td>
+            <td><?= $this->Html->link($article->user->username,['controller' =>'users' ,'action' => 'profile', $article->user_id]) ?></td>
             <td><?= $this->Html->link($article->title, ['action' => 'view', $article->id]) ?></td>
             <td>
                 <?php $image_number = $article->image_number;   ?>
