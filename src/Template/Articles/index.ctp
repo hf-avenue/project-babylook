@@ -23,23 +23,15 @@
     <?php foreach ($articles as $article): ?>
         <tr>
             <td><?= $article->id ?></td>
-            <td><?= $article->user_id ?></td>
+            <td><?= $this->Html->link($article->user_id,['controller' =>'users' ,'action' => 'profile', $article->user_id]) ?></td>
+            <td><?= $this->Html->link($article->title, ['action' => 'view', $article->id]) ?></td>
             <td>
-                <?= $this->Html->link($article->title, ['action' => 'view', $article->id]) ?>
-            </td>
-            <td>
-
                 <?php $image_number = $article->image_number;   ?>
 
                 <?php if ($image_number != null){
                     echo ($this->Html->image('/img/thumbnail/'.$image_number.".png"));
                 }; ?>
-
-            </th>
-
-            <td>
-                <?= $article->created->format(DATE_RFC850) ?>
-            </td>
+            <td><?= $article->created->format(DATE_RFC850) ?></td>
         </tr>
     <?php endforeach; ?>
 </table>
