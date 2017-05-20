@@ -11,3 +11,10 @@
     <?= $this->Form->button(__('Submit')); ?>
     <?= $this->Form->end() ?>
 </div>
+
+<div>
+    <div class="col-xs-3">
+        <a href="twitter" class="btn btn-block btn-lg btn-info">Info Button</a>
+    </div>
+
+</div>
