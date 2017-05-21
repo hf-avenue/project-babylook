@@ -17,7 +17,7 @@ class UsersController extends AppController {
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add', 'logout', 'twitter']);
+        $this->Auth->allow(['add', 'logout', 'twitterLogin']);
     }
 
     public function index()
@@ -109,19 +109,46 @@ class UsersController extends AppController {
     }
 
     // twitterでのアカウント設定
-    public function twitter()
+    public function twitterLogin()
     {
+
+        session_start();
+        define( 'CONSUMER_KEY', 'mVmdVb2x8hYkTz2ddVlvnEGS8' );
+        define( 'CONSUMER_SECRET', 'cEUVZ3IDLXxk1ih3nK05WSfNt1LGQSz3TJvoaGawKup8UFOtDM' );
+        define( 'OAUTH_CALLBACK', 'http://192.168.205.10/project/babylook/users/twitter_login' );
+        // twitter側でoauth_tokenを取得していればアクセストークン取得後にSNSログイン処理、出来ていなければリクエストトークンを取得してtwitter認証画面へ
+        if((array_key_exists('oauth_token', $_SESSION))){
+            $request_token = [];
+            $request_token['oauth_token'] = $_SESSION['oauth_token'];
+            $request_token['oauth_token_secret'] = $_SESSION['oauth_token_secret'];
+            //Twitterから返されたOAuthトークンがセッション上のものと一致するかをチェック
+            if (isset($_REQUEST['oauth_token']) && $request_token['oauth_token'] !== $_REQUEST['oauth_token']) {
+                die( 'Error!' );
+            }
+            // todo:このあたりのバグっぽいところ検証。1時間やってだめだったら、素直にリクエストトークン取得と、コネクト画面は別に作る。 http://qiita.com/sofpyon/items/982fe3a9ccebd8702867
+            $access_token = $_SESSION['access_token'];
+            $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
+            $user = $connection->get("account/verify_credentials");
+            var_dump($user);
+            session_destroy();
+            exit;
+        }
+
         // TODO:http://atomicbox.tank.jp/website/cakephp/1290/ , https://twitteroauth.com/　この二つのマニュアルを見てログイン実装
-        $connection = new TwitterOAuth("mVmdVb2x8hYkTz2ddVlvnEGS8", "mVmdVb2x8hYkTz2ddVlvnEGS8", $access_token, $access_token_secret);
+        // まずリクエストトークンを取ってtwitter認証画面にリダイレクトさせるだけ
 
-
-
-
-
+        $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
+        $request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => OAUTH_CALLBACK));
+        //必要な情報をセッションに入れる
+        $_SESSION['oauth_token'] = $request_token['oauth_token'];
+        $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
+        $_SESSION['access_token'] = $connection->oauth("oauth/access_token", array("oauth_verifier" => $_REQUEST['oauth_verifier']));
+        //Twitter.com 上の認証画面のURLを取得( この行についてはコメント欄も参照 )
+        $url = $connection->url('oauth/authenticate', array('oauth_token' => $request_token['oauth_token']));
+        //Twitter.com の認証画面へリダイレクト
+        session_regenerate_id();
+        header( 'location: '. $url );
         exit;
-
-
-
     }
 
 }
