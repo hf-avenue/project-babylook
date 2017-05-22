@@ -137,9 +137,14 @@ class UsersController extends AppController {
             ちなみに、この変数の中に、OAuthトークンとトークンシークレットが配列となって入っています。
             */
             $access_token = $_SESSION['access_token'];
-            // ユーザープロファイル取得
+            // ユーザープロファイル取得 正しければここでコケない
             $user_connection = new  TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
             $user = $user_connection->get("account/verify_credentials");
+            if ($user !=false){
+                echo "これが俺のリクエストトークンや<br>";
+                var_dump($_SESSION);
+                echo "<br><hr><br>";
+            }
             print_r($user);
             //todo:まずはこれでアカウント作成
             //return $this->redirect(['action' => 'login']);
