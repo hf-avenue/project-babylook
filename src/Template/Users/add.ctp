@@ -3,6 +3,7 @@
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?= $this->Form->control('username') ?>
+        <?= $this->Form->control('mail') ?>
         <?= $this->Form->control('password') ?>
         <?= $this->Form->control('role', [
             'options' => ['admin' => 'Admin', 'author' => 'Author']

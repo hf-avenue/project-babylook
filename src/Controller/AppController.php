@@ -50,7 +50,15 @@ class AppController extends Controller
                 'controller' => 'Users',
                 'action' => 'login',
 
-            ]
+            ],
+            'authenticate' => [
+                'Form' => [
+                    'fields' => [
+                        'username' => 'mail',
+                        'password' => 'password'
+                    ]
+                ]
+            ],
         ]);
         $this->loadComponent('RequestHandler');
 
