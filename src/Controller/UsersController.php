@@ -42,7 +42,7 @@ class UsersController extends AppController {
                 return $this->redirect(['action' => 'login']);
             }
             $this->Flash->error(__('Unable to add the user.'));
-        }
+        } //TODO:elseを用意してここでログインがgetできたらtwitterのトークンで処理する
         $this->set('user', $user);
     }
 
@@ -55,7 +55,7 @@ class UsersController extends AppController {
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Invalid mail or password, try again'));
-        }
+        } //TODO:elseを用意してここでログインがgetできたらtwitterのトークンで処理する
     }
 
     public function logout()
@@ -147,6 +147,8 @@ class UsersController extends AppController {
             }
             print_r($user);
             //todo:まずはこれでアカウント作成
+            // todo:  $access_token['oauth_token'],$access_token['oauth_token_secret'],$user['user_id'] この三つをセッションにいれて今度はaddに飛ばしてアカウントをとらせば、hidden経由で入る
+
             //return $this->redirect(['action' => 'login']);
             exit;
         }
