@@ -33,8 +33,8 @@ class MypagesController extends AppController {
         $this->loadModel('Scores');
         $this->loadModel('Trophies');
         $this->loadModel('Users');
-        $this->loadModel('MissionMasters'); //TODO:後でモデル定義　2017/06/09
-        $this->loadModel('UserMissionStatuses'); //TODO:後でモデル定義　2017/06/09
+        $this->loadModel('MissionMasters');
+        $this->loadModel('UserMissionStatuses');
 
         // ユーザー名取得
         $users = $this->Users->find('all', array('conditions' => array('Users.id' =>$user_id)));
@@ -59,7 +59,7 @@ class MypagesController extends AppController {
         $trophies = $this->Trophies->find('all');
         $this->set('trophies',$trophies);
 
-        // ここからミッションのフラグ確認追加です todo:アカウント作成時に最初のミッションを作成　2017/06/09 イイネと同じで別取得した方が早い
+        // ここからミッションのフラグ確認追加です
         // 結合させたミッション進行度とミッションマスタを出してあげる
         $missions = $this->UserMissionStatuses->find('all', array('conditions'=>array('UserMissionStatuses.user_id' => $user_id,)))->contain(['MissionMasters']);
 
