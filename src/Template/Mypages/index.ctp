@@ -3,6 +3,19 @@
 <h1>Babylook Portal2 proto type system</h1>
 
 <table>
+
+
+答え
+    <?php foreach ($missions as $mission): ?>
+        <tr>
+            <td><?= var_dump($mission);?></td>
+        </tr>
+    <?php endforeach; ?>
+
+
+</table>
+
+<table>
     <tr>
         <th>あなたの名前：<?= $users->username ?></th>
     </tr>
