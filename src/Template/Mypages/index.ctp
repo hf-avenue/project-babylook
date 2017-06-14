@@ -5,13 +5,6 @@
 <table>
 
 
-答え
-    <?php foreach ($missions as $mission): ?>
-        <tr>
-            <td><?= var_dump($mission);?></td>
-        </tr>
-    <?php endforeach; ?>
-
 
 </table>
 
@@ -45,6 +38,28 @@
         <td><?= $trophie->trophie_name ?></td>
     </tr>
     <?php endforeach; ?>
+
+    <tr>
+        <td>　　　　　</td>
+    </tr>
+
+
+    <tr>
+        <th>クリアしたミッションは</th>
+    </tr>
+
+    <?php foreach ($missions as $mission): ?>
+    <!-- todo:仮仕様として、ユーザーに発行されたミッションの全てを出し、Ｘ／Ｙで進捗率を出しています。％にする場合は応相談でお願いします 2017/06/14-->
+            <td>ミッション番号<?= $mission->mission_master->id ?></td>
+            <td>ミッション名<?= $mission->mission_master->mission_name  ?></td>
+            <td>ミッション内容<?= $mission->mission_master->mission_description ?></td>
+            <td>ミッション進捗率<?=$mission->mission_progress?> ／ <?= $mission->mission_master->mission_want_progres ?></td>
+            <td>ミッション可否<?php if($mission->mission_completed==1){print "完了！";}else{print "実行中";} ?> </td>
+        </tr>
+    <?php endforeach; ?>
+
+    <BR>
+    <BR>
 
     <tr>
         <th>Id</th>
