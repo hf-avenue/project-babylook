@@ -16,7 +16,7 @@ class UserMissionStatusesTable extends Table {
 
     public function initialize(array $config)
     {
-        // UsersテーブルのidとArticlesテーブルのuser_idは結合の為のキー
+        // MasterテーブルのidとStatusesテーブルのuser_idは結合の為のキー
         $this->belongsTo('MissionMasters')->setForeignKey('user_id')->setJoinType('INNER');
         $this->addBehavior('Timestamp');
     }
