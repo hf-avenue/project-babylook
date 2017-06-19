@@ -12,7 +12,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use App\Model\Table\MissionMastersTable;
 use App\Model\Table\UserMissionStatusesTable;
-
+use Cake\ORM\TableRegistry;
+use Cake\Datasource\ConnectionManager;
 
 class MypagesController extends AppController {
     // 一覧表示
@@ -88,11 +89,35 @@ class MypagesController extends AppController {
         {
             return $this->redirect($this->Auth->redirectUrl('/users/login'));
         }
+
+        // モデル取得
         $this->loadModel('UserProfiles');
-        // todo:Profilesの中の文章をset
+        $post_profile = $this->UserProfiles->newEntity();
+        // データ取得
+        $user_profiles = $this->UserProfiles->find('all', array('conditions'=>array('UserProfiles.user_id' => $user_id)));
+        $profile = $user_profiles->first();
+        // 投稿だったら受付、そうでなければ表示
+        if ($this->request->is('post') && $profile != NULL) {
+            // todo:update文入れとく
 
-        // todo:profilesがなかったらインサート・あったらアップデート http://bit.ly/2tiXCrS これを参考に
+            
+        } else if ($this->request->is('post') && $profile == NULL) {
+            // insert
+            $post_profile = $this->UserProfiles->patchEntity($post_profile, $this->request->getData());
+            // 投稿者IDを追記してsave
+            $post_profile->user_id = $this->Auth->user('id');
+            if ($this->UserProfiles->save($post_profile)) {
+                $this->Flash->success(__('Your article has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            }
+        } else if ($profile != NULL){
+            $this->set('profieles_text', $profile->profiles_text);
+        } else {
+            $this->set('profieles_text', NULL);
+        }
 
+
+        //
 
     }
 
