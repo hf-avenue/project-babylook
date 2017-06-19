@@ -26,8 +26,6 @@ class MypagesController extends AppController {
             return $this->redirect($this->Auth->redirectUrl('/users/login'));
         }
 
-
-
         // ここから各モデルをロード　(トロフィーを基準にした処理が必要ならここから先のロジックをコピーするか共通化)
         $this->loadModel('Articles');
         $this->loadModel('Scores');
@@ -59,16 +57,42 @@ class MypagesController extends AppController {
         $trophies = $this->Trophies->find('all');
         $this->set('trophies',$trophies);
 
-        // ここからミッションのフラグ確認追加です
+        // ここからミッションのフラグ確認追加です(ミッションの発行はMypageに集約)
+        // 進行中ミッションを取得
+        $running_mission = $this->UserMissionStatuses->find('all', array('conditions'=>array('UserMissionStatuses.user_id' => $user_id,'UserMissionStatuses.mission_completed' => 0)));
+        // 進行中ミッションがなければ、新ミッション発行
+        $running= $running_mission->count();
+        if ($running === 0){
+            // 成功件数に応じてミッションを追加
+            $mission_query = $this->UserMissionStatuses->find('all', array('conditions'=>array('UserMissionStatuses.user_id' => $user_id,'UserMissionStatuses.mission_completed' => 1 )));
+            $mission_count = $mission_query->count();
+            // 成功件数+1のミッションを発行する
+            $mission = $this->UserMissionStatuses->newEntity();
+            $mission->user_id = $user_id;
+            $mission->mission_id = ++$mission_count;
+            $this->UserMissionStatuses->save($mission);
+        }
         // 結合させたミッション進行度とミッションマスタを出してあげる
         $missions = $this->UserMissionStatuses->find('all', array('conditions'=>array('UserMissionStatuses.user_id' => $user_id,)))->contain(['MissionMasters']);
-
         $this->set('missions',$missions);
-
-
-
-
         // ここまで
+
+    }
+
+    // プロフィールの自己紹介欄を入力する画面
+    public function edit()
+    {
+        // ログインチェック
+        $user_id = $this->Auth->user('id');
+        if ($user_id ==null)
+        {
+            return $this->redirect($this->Auth->redirectUrl('/users/login'));
+        }
+        $this->loadModel('UserProfiles');
+        // todo:Profilesの中の文章をset
+
+        // todo:profilesがなかったらインサート・あったらアップデート http://bit.ly/2tiXCrS これを参考に
+
 
     }
 

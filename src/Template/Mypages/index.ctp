@@ -10,13 +10,17 @@
 
 <table>
     <tr>
-        <th>あなたの名前：<?= $users->username ?></th>
+        <th><h5>あなたの名前：<?= $users->username ?></h5></th>
     </tr>
     <tr>
         <th><?= $this->Html->image('/img/default_icon.jpg'); ?></th>
     </tr>
 
-<?= $this->Html->link('Add Article', ['controller' =>'articles' ,'action' => 'add']) ?>
+    <tr>
+        <th><h5><?= $this->Html->link('Edit Profile', ['action' => 'edit']) ?></h5></th>
+    </tr>
+
+
 <table>
     <tr>
         <th>あなたがイイネされた回数は</th>
