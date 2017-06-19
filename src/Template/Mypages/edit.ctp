@@ -7,7 +7,7 @@
 <table>
 
     <?= $this->Form->create() ?>
-    <?= $this->Form->control('profieles_text', array('default' => $profieles_text)) ?>
+    <?= $this->Form->control('body', array('default' => $body)) ?>
     <?= $this->Form->button(__('Submit')); ?>
     <?= $this->Form->end() ?>
 

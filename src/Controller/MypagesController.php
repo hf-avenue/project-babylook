@@ -102,18 +102,17 @@ class MypagesController extends AppController {
 
             
         } else if ($this->request->is('post') && $profile == NULL) {
-            // insert
+            // insert bodyは暗黙の取得、user_idは明示的に入力
             $post_profile = $this->UserProfiles->patchEntity($post_profile, $this->request->getData());
-            // 投稿者IDを追記してsave
             $post_profile->user_id = $this->Auth->user('id');
             if ($this->UserProfiles->save($post_profile)) {
                 $this->Flash->success(__('Your article has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
         } else if ($profile != NULL){
-            $this->set('profieles_text', $profile->profiles_text);
+            $this->set('body', $profile->body);
         } else {
-            $this->set('profieles_text', NULL);
+            $this->set('body', NULL);
         }
 
 
