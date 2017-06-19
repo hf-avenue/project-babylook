@@ -5,4 +5,11 @@
 
 <a href="./">戻る</a>
 <table>
+
+    <?= $this->Form->create() ?>
+    <?= $this->Form->control('profieles_text', array('default' => $profieles_text)) ?>
+    <?= $this->Form->button(__('Submit')); ?>
+    <?= $this->Form->end() ?>
+
+
 </table>
