@@ -98,11 +98,18 @@ class MypagesController extends AppController {
         $profile = $user_profiles->first();
         // 投稿だったら受付、そうでなければ表示
         if ($this->request->is('post') && $profile != NULL) {
-            // todo:update文入れとく
-
-            
+            // update
+            // 明示的にプライマリキーを指定する事で更新扱いになる
+            $post_profile = $this->UserProfiles->patchEntity($post_profile, $this->request->getData());
+            $post_profile->id = $profile->id;
+            $post_profile->user_id = $this->Auth->user('id');
+            if ($this->UserProfiles->save($post_profile)) {
+                $this->Flash->success(__('Your article has been saved.'));
+                return $this->redirect(['action' => 'index']);
+            }
         } else if ($this->request->is('post') && $profile == NULL) {
-            // insert bodyは暗黙の取得、user_idは明示的に入力
+            // insert
+            // bodyは暗黙の取得、user_idは明示的に入力
             $post_profile = $this->UserProfiles->patchEntity($post_profile, $this->request->getData());
             $post_profile->user_id = $this->Auth->user('id');
             if ($this->UserProfiles->save($post_profile)) {
