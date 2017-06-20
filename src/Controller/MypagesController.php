@@ -125,12 +125,18 @@ class MypagesController extends AppController {
                     throw new Exception(Configure::read("M.ERROR.INVALID"));
                 }
                 // プロフィール新規登録なので、ミッション１は完了扱いになる
-                $mission->mission_progress = 1;
-                $mission->mission_completed = 1;
-                if (!$this->UserMissionStatuses->save($mission)) {
+
+                $id = $mission->id;
+
+                $user_mission_statuses_table = TableRegistry::get('UserMissionStatuses');
+                $user_mission_statuses = $user_mission_statuses_table->get($id);
+                $user_mission_statuses->id = $id;
+                $user_mission_statuses->mission_completed = 1;
+                $user_mission_statuses->mission_progress = 1;
+
+                if (!$user_mission_statuses_table->save($user_mission_statuses)){
                     throw new Exception(Configure::read("M.ERROR.INVALID"));
                 }
-
             } catch(Exception $e){
                 $this->Flash->error($e);
                 $connection->rollback(); //ロールバック
