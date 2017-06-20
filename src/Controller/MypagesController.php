@@ -92,10 +92,15 @@ class MypagesController extends AppController {
 
         // モデル取得
         $this->loadModel('UserProfiles');
+        $this->loadModel('UserMissionStatuses');
         $post_profile = $this->UserProfiles->newEntity();
+        $mission_statuses = $this->UserMissionStatuses->newEntity();
         // データ取得
         $user_profiles = $this->UserProfiles->find('all', array('conditions'=>array('UserProfiles.user_id' => $user_id)));
         $profile = $user_profiles->first();
+        $mission_statuses = $this->UserMissionStatuses->find('all', array('conditions'=>array('UserMissionStatuses.user_id' => $user_id, 'UserMissionStatuses.mission_id' =>1)));
+        $mission = $mission_statuses->first();
+
         // 投稿だったら受付、そうでなければ表示
         if ($this->request->is('post') && $profile != NULL) {
             // update
@@ -108,23 +113,38 @@ class MypagesController extends AppController {
                 return $this->redirect(['action' => 'index']);
             }
         } else if ($this->request->is('post') && $profile == NULL) {
-            // insert
-            // bodyは暗黙の取得、user_idは明示的に入力
-            $post_profile = $this->UserProfiles->patchEntity($post_profile, $this->request->getData());
-            $post_profile->user_id = $this->Auth->user('id');
-            if ($this->UserProfiles->save($post_profile)) {
-                $this->Flash->success(__('Your article has been saved.'));
+            $connection = ConnectionManager::get('default');
+            $connection->begin();
+            try{
+                // insert
+                // bodyは暗黙の取得、user_idは明示的に入力、2テーブル更新なので明示的にトランザクション宣言
+                $post_profile = $this->UserProfiles->patchEntity($post_profile, $this->request->getData());
+                $post_profile->user_id = $this->Auth->user('id');
+                //　プロフィール新規登録
+                if (!$this->UserProfiles->save($post_profile)) {
+                    throw new Exception(Configure::read("M.ERROR.INVALID"));
+                }
+                // プロフィール新規登録なので、ミッション１は完了扱いになる
+                $mission->mission_progress = 1;
+                $mission->mission_completed = 1;
+                if (!$this->UserMissionStatuses->save($mission)) {
+                    throw new Exception(Configure::read("M.ERROR.INVALID"));
+                }
+
+            } catch(Exception $e){
+                $this->Flash->error($e);
+                $connection->rollback(); //ロールバック
                 return $this->redirect(['action' => 'index']);
             }
+            // 成功したなら成功表示して画面遷移
+            $this->Flash->success(__('Your article has been saved.'));
+            return $this->redirect(['action' => 'index']);
+        // postでなければ表示を行う
         } else if ($profile != NULL){
             $this->set('body', $profile->body);
         } else {
             $this->set('body', NULL);
         }
-
-
-        //
-
     }
 
     public function view($id = null)
