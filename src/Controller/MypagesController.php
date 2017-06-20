@@ -136,6 +136,7 @@ class MypagesController extends AppController {
                 $connection->rollback(); //ロールバック
                 return $this->redirect(['action' => 'index']);
             }
+            $connection->commit();
             // 成功したなら成功表示して画面遷移
             $this->Flash->success(__('Your article has been saved.'));
             return $this->redirect(['action' => 'index']);
