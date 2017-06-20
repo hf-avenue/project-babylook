@@ -70,7 +70,7 @@ class MypagesController extends AppController {
             // 成功件数+1のミッションを発行する
             $mission = $this->UserMissionStatuses->newEntity();
             $mission->user_id = $user_id;
-            $mission->mission_id = ++$mission_count;
+            $mission->mission_id = $mission_count +1 ;
             $this->UserMissionStatuses->save($mission);
         }
         // 結合させたミッション進行度とミッションマスタを出してあげる
