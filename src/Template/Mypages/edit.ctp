@@ -7,7 +7,7 @@
 <table>
 
     <?= $this->Form->create() ?>
-    <?= $this->Form->control('body', array('default' => $body)) ?>
+    <?= $this->Form->control('body', array('default' => $body, 'rows' => '5')) ?>
     <?= $this->Form->button(__('Submit')); ?>
     <?= $this->Form->end() ?>
 
