@@ -13,13 +13,5 @@ use Cake\Validation\Validator;
 
 class UserProfilesTable extends Table {
 
-    public function initialize(array $config)
-    {
-        // UsersテーブルのidとUserProfilesテーブルのuser_idは結合の為のキー
-        $this->belongsTo('Users')->setForeignKey('user_id')->setJoinType('INNER');
-        $this->addBehavior('Timestamp');
-    }
-
-
 
 }
