@@ -44,7 +44,12 @@
     <?php endforeach; ?>
 
     <tr>
-        <td>　　　　　</td>
+        <th>プロフィール</th>
+        <td>
+
+            <?php echo nl2br(h($profile->body)); ?>
+
+        </td>
     </tr>
 
 

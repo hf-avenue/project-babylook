@@ -34,11 +34,18 @@ class MypagesController extends AppController {
         $this->loadModel('Users');
         $this->loadModel('MissionMasters');
         $this->loadModel('UserMissionStatuses');
+        $this->loadModel('UserProfiles');
+
 
         // ユーザー名取得
         $users = $this->Users->find('all', array('conditions' => array('Users.id' =>$user_id)));
         $row = $users->first();
         $this->set('users',$row);
+
+        // プロフィール取得
+        $profiles = $this->UserProfiles->find('all', array('conditions' => array('UserProfiles.user_id' =>$user_id)));
+        $profile = $profiles->first();
+        $this->set('profile',$profile);
 
         // ログインユーザーIDで投稿をソート
         $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));
