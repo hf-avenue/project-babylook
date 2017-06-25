@@ -44,7 +44,12 @@
     <?php endforeach; ?>
 
     <tr>
-        <th>プロフィール</th>
+
+        <th><h5>画像投稿する</h5></th>
+        <td><h5><?= $this->Html->link('Add Article', ['controller' =>'articles' ,'action' => 'add']) ?></h5>
+        </td>
+
+        <th><h5>プロフィール</h5></th>
         <td>
 
             <?php echo nl2br(h($profile->body)); ?>
