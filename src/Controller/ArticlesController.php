@@ -89,6 +89,7 @@ class ArticlesController extends AppController {
             $thumb_height = round( $original_height * $thumb_width / $original_width );
 
             // オリジナルファイルの取得
+            $img_ext = mb_strtolower($img_ext);
             switch ($img_ext) {
                 case "png":
                     $original_image = imagecreatefrompng($image_upload_path);
