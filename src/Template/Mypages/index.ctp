@@ -51,8 +51,9 @@
 
         <th><h5>プロフィール</h5></th>
         <td>
-
-            <?php echo nl2br(h($profile->body)); ?>
+            <?php if($profile->body){
+                echo nl2br(h($profile->body));
+            } ?>
 
         </td>
     </tr>
