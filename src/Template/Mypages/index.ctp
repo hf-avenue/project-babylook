@@ -3,25 +3,17 @@
 <h1>Babylook Portal2 proto type system</h1>
 
 <table>
-
-
-
-</table>
-
-<table>
     <tr>
-        <th><h5>あなたの名前：<?= $users->username ?></h5></th>
+        <th><h5>あなたの名前：</h5></th><th><h5><?= $users->username ?></h5></th>
     </tr>
     <tr>
         <th><?= $this->Html->image('/img/default_icon.jpg'); ?></th>
     </tr>
-
     <tr>
-        <th><h5><?= $this->Html->link('Edit Profile', ['action' => 'edit']) ?></h5></th>
+        <th><h6><?= $this->Html->link('プロフィール更新', ['action' => 'edit']) ?></h6></th>
+        <th><h6><?= $this->Html->link('画像を投稿', ['controller' =>'articles' ,'action' => 'add']) ?></h6></th>
     </tr>
 
-
-<table>
     <tr>
         <th>あなたがイイネされた回数は</th>
         <th><?=$my_score ?>回です</th>
@@ -44,18 +36,13 @@
     <?php endforeach; ?>
 
     <tr>
-
-        <th><h5>画像投稿する</h5></th>
-        <td><h5><?= $this->Html->link('Add Article', ['controller' =>'articles' ,'action' => 'add']) ?></h5>
-        </td>
-
         <th><h5>プロフィール</h5></th>
-        <td>
+        <th>
             <?php if($profile->body){
                 echo nl2br(h($profile->body));
             } ?>
 
-        </td>
+        </th>
     </tr>
 
 
@@ -72,10 +59,6 @@
             <td>ミッション可否<?php if($mission->mission_completed==1){print "完了！";}else{print "実行中";} ?> </td>
         </tr>
     <?php endforeach; ?>
-
-    <BR>
-    <BR>
-
     <tr>
         <th>Id</th>
         <th>作品Title</th>
