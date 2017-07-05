@@ -43,9 +43,6 @@ class ArticlesController extends AppController {
         $user = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id)))->contain(['Users']);
         $user =$user->first();
         $this->set(compact('article', 'user'));
-
-
-
     }
 
     /**

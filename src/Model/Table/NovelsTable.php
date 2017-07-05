@@ -22,13 +22,9 @@ class NovelsTable extends Table {
 
     public function validationDefault(Validator $validator)
     {
-
-        $validator
-            ->notEmpty('title')
-            ->requirePresence('title')
-            ->notEmpty('body')
-            ->requirePresence('body');
-
-    } // 'fileSize', '<=', '10MB'
+        return $validator
+            ->notEmpty('title', 'A title is required')
+            ->notEmpty('body', 'A body is required');
+    }
 
 }

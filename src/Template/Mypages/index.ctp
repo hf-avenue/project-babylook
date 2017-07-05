@@ -12,6 +12,8 @@
     <tr>
         <th><h6><?= $this->Html->link('プロフィール更新', ['action' => 'edit']) ?></h6></th>
         <th><h6><?= $this->Html->link('画像を投稿', ['controller' =>'articles' ,'action' => 'add']) ?></h6></th>
+        <th><h6><?= $this->Html->link('小説を投稿', ['controller' =>'novels' ,'action' => 'add']) ?></h6></th>
+
     </tr>
 
     <tr>
