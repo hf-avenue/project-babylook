@@ -43,8 +43,8 @@ class NovelsController extends AppController {
         $user = $this->Novels->find('all', array('conditions'=>array('Novels.user_id' => $user_id)))->contain(['Users']);
         $user =$user->first();
         $this->set(compact('novel', 'user'));
-
     }
+
 
     /**
      * @return mixed
@@ -53,20 +53,19 @@ class NovelsController extends AppController {
     {
         $novel = $this->Novels->newEntity();
         if ($this->request->is('post')) {
-            // 時刻は明示的に宣言する事
             $novel = $this->Novels->patchEntity($novel, $this->request->getData());
             // 投稿者IDを追記
             $novel->user_id = $this->Auth->user('id');
-
             // 保存処理
             if ($this->Novels->save($novel)) {
-                $this->Flash->success(__('Your novels has been saved.'));
+                $this->Flash->success(__('Your novel has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Unable to add your novels.'));
+            $this->Flash->error(__('Unable to add your novel.'));
         }
         $this->set('novel', $novel);
     }
+
 
 
 
@@ -106,7 +105,7 @@ class NovelsController extends AppController {
             $scores->novels_id =  $novels['id'];
 
             // 保存するよ
-            if ($this->Scores->save($scores)) {
+            if ($this->NovelScores->save($scores)) {
                 // $this->Flash->success(__('投票ありがとうございます'));
             }
         }
