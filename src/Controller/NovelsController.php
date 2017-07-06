@@ -9,7 +9,7 @@
 
 namespace App\Controller;
 
-use App\Controller\AppController;
+use App\Controller;
 use Cake\Routing\Router;
 
 
@@ -20,6 +20,7 @@ class NovelsController extends AppController {
         parent::initialize();
         $this->loadComponent('RequestHandler');
     }
+
 
 
     // 一覧表示
@@ -36,12 +37,19 @@ class NovelsController extends AppController {
         $this->set(compact('novels'));
     }
 
+    /**
+     * @param null $id
+     */
     public function view($id = null)
     {
+
+        App::import('Vendor','Michelf/Michelf');
+
         $novel = $this->Novels->get($id);
         $user_id =$novel->user_id;
         $user = $this->Novels->find('all', array('conditions'=>array('Novels.user_id' => $user_id)))->contain(['Users']);
         $user =$user->first();
+        $user->body = Markdown::defaultTransform($user->body);
         $this->set(compact('novel', 'user'));
     }
 
