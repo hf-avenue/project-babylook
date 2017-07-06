@@ -12,6 +12,10 @@ namespace App\Controller;
 use App\Controller;
 use Cake\Routing\Router;
 use Michelf\Markdown;
+require_once '../vendor/Michelf/MarkdownExtra.inc.php';
+use Michelf\MarkdownExtra;
+
+
 
 class NovelsController extends AppController {
 
@@ -43,19 +47,17 @@ class NovelsController extends AppController {
     public function view($id = null)
     {
 
-
-
         $novel = $this->Novels->get($id);
         $user_id =$novel->user_id;
         $user = $this->Novels->find('all', array('conditions'=>array('Novels.user_id' => $user_id)))->contain(['Users']);
+        $novel->body = MarkdownExtra::defaultTransform($novel->body);
         $user =$user->first();
-        $user->body = Markdown::defaultTransform($user->body);
         $this->set(compact('novel', 'user'));
     }
 
-    /**
-     * @return mixed
-     */
+/**
+ * @return mixed
+ */
     public function add()
     {
         $novel = $this->Novels->newEntity();
