@@ -11,7 +11,7 @@ namespace App\Controller;
 
 use App\Controller;
 use Cake\Routing\Router;
-
+use Michelf\Markdown;
 
 class NovelsController extends AppController {
 
@@ -43,7 +43,7 @@ class NovelsController extends AppController {
     public function view($id = null)
     {
 
-        App::import('Vendor','Michelf/Michelf');
+
 
         $novel = $this->Novels->get($id);
         $user_id =$novel->user_id;
@@ -52,7 +52,6 @@ class NovelsController extends AppController {
         $user->body = Markdown::defaultTransform($user->body);
         $this->set(compact('novel', 'user'));
     }
-
 
     /**
      * @return mixed
@@ -73,9 +72,6 @@ class NovelsController extends AppController {
         }
         $this->set('novel', $novel);
     }
-
-
-
 
     public function vote($novels_id = null)
     {
