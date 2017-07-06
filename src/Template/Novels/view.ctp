@@ -1,7 +1,7 @@
 <h1>タイトル：<?= h($novel->title) ?></h1>
 <h2>作者：<?= $this->Html->link($user->user->username,['controller' =>'users' ,'action' => 'profile', $novel->user_id]);?>
     <p>コンテンツ内容：</p>
-    <div><?php echo  nl2br(h($novel->body)); ?></div>
+    <div><?php echo  $novel->body; ?></div>
 <br/>
 
 
