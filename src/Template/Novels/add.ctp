@@ -4,6 +4,17 @@
 <BR>
 <p>この小説ではマークダウン記法で文字の強調が出来ます。<BR>現在使える表現はこちら</p>
 
+<pre>
+123(issue) 見出し生成
+Italics	　 斜体生成
+リスト　　　<li>リスト</list>
+Blockquote	> blockquote
+<a>Link</a>	[title](http://)
+引用されたソースコード	`code`
+</pre>
+
+
+
 
 <?= $this->Form->create($novel) ?>
 <?= $this->Form->control('title') ?>
