@@ -4,14 +4,18 @@
 
 <table>
     <tr>
-        <th>あなたの名前：<?= $users->username ?></th>
+        <th><h5>あなたの名前：</h5></th><th><h5><?= $users->username ?></h5></th>
     </tr>
     <tr>
         <th><?= $this->Html->image('/img/default_icon.jpg'); ?></th>
     </tr>
+    <tr>
+        <th><h6><?= $this->Html->link('プロフィール更新', ['action' => 'edit']) ?></h6></th>
+        <th><h6><?= $this->Html->link('画像を投稿', ['controller' =>'articles' ,'action' => 'add']) ?></h6></th>
+        <th><h6><?= $this->Html->link('小説を投稿', ['controller' =>'novels' ,'action' => 'add']) ?></h6></th>
 
-<?= $this->Html->link('Add Article', ['controller' =>'articles' ,'action' => 'add']) ?>
-<table>
+    </tr>
+
     <tr>
         <th>あなたがイイネされた回数は</th>
         <th><?=$my_score ?>回です</th>
@@ -33,6 +37,30 @@
     </tr>
     <?php endforeach; ?>
 
+    <tr>
+        <th><h5>プロフィール</h5></th>
+        <th>
+            <?php if($profile->body){
+                echo nl2br(h($profile->body));
+            } ?>
+
+        </th>
+    </tr>
+
+
+    <tr>
+        <th>クリアしたミッションは</th>
+    </tr>
+
+    <?php foreach ($missions as $mission): ?>
+    <!-- todo:仮仕様として、ユーザーに発行されたミッションの全てを出し、Ｘ／Ｙで進捗率を出しています。％にする場合は応相談でお願いします 2017/06/14-->
+            <td>ミッション番号<?= $mission->mission_master->id ?></td>
+            <td>ミッション名<?= $mission->mission_master->mission_name  ?></td>
+            <td>ミッション内容<?= $mission->mission_master->mission_description ?></td>
+            <td>ミッション進捗率<?=$mission->mission_progress?> ／ <?= $mission->mission_master->mission_want_progres ?></td>
+            <td>ミッション可否<?php if($mission->mission_completed==1){print "完了！";}else{print "実行中";} ?> </td>
+        </tr>
+    <?php endforeach; ?>
     <tr>
         <th>Id</th>
         <th>作品Title</th>
