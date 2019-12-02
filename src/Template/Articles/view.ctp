@@ -1,5 +1,6 @@
 <h1>タイトル：<?= h($article->title) ?></h1>
-<h2>作者：<?= $this->Html->link($user->user->username,['controller' =>'users' ,'action' => 'profile', $article->user_id]);?><p>コンテンツ内容：<?= h($article->body) ?></p>
+<h2>作者：<?= $this->Html->link($user->user->username,['controller' =>'users' ,'action' => 'profile', $article->user_id]);?></h2>
+    <p id="description"><?=nl2br(h($article->body)) ?></p>
 <br/>
 <?php echo $this->Html->script('jquery-3.2.1.min.js'); ?>
 

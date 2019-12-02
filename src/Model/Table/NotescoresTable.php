@@ -10,6 +10,6 @@ namespace App\Model\Table;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class NovelScoresTable extends Table {
+class NotescoresTable extends Table {
 
 }

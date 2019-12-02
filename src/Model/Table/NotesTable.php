@@ -11,11 +11,11 @@ namespace App\Model\Table;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class NovelsTable extends Table {
+class NotesTable extends Table {
 
     public function initialize(array $config)
     {
-        // UsersテーブルのidとNovelsテーブルのuser_idは結合の為のキー
+        // UsersテーブルのidとNotesテーブルのuser_idは結合の為のキー
         $this->belongsTo('Users')->setForeignKey('user_id')->setJoinType('INNER');
         $this->addBehavior('Timestamp');
     }

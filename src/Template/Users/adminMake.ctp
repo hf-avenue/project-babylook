@@ -6,7 +6,7 @@
         <?= $this->Form->control('mail') ?>
         <?= $this->Form->control('password') ?>
         <?= $this->Form->control('role', [
-            'options' => ['author' => 'Author']
+            'options' => ['admin' => 'Admin']
         ]) ?>
     </fieldset>
     <?= $this->Form->button(__('Submit')); ?>

@@ -9,13 +9,13 @@
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
             <span class="sr-only">Toggle navigation</span>
         </button>
-        <a class="navbar-brand" href="#">BabylookPortal</a>
+        <a class="navbar-brand" href="#">sns Portal</a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-01">
         <ul class="nav navbar-nav navbar-left">
             <li><a href="<?= $this->Url->build('/mypages/index/') ?>">マイページ</a></li>
             <li><a href="<?= $this->Url->build('/articles/index') ?>">画像一覧</a></li>
-            <li><a href="<?= $this->Url->build('/novels/index') ?>">小説一覧</a></li>
+            <li><a href="<?= $this->Url->build('/notes/index') ?>">ノート一覧</a></li>
             <li><a href="<?= $this->Url->build('/users/logout') ?>">ログアウト</a></li>
 
             <!-- その他のメニューは決まり次第実装

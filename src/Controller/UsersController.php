@@ -17,7 +17,7 @@ class UsersController extends AppController {
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['add', 'logout', 'twitterLogin']);
+        $this->Auth->allow(['add', 'logout']);
     }
 
     public function index()
@@ -31,6 +31,7 @@ class UsersController extends AppController {
         $this->set(compact('user'));
     }
 
+    // ユーザーアカウント取得
     public function add()
     {
         $user = $this->Users->newEntity();
@@ -38,11 +39,25 @@ class UsersController extends AppController {
             $user = $this->Users->patchEntity($user, $this->request->getData());
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
-
                 return $this->redirect(['action' => 'login']);
             }
             $this->Flash->error(__('Unable to add the user.'));
-        } //TODO:elseを用意してここでログインがgetできたらtwitterのトークンで処理する
+        }
+        $this->set('user', $user);
+    }
+
+    // 管理者アカウント取得(要アクセス制限)
+    public function adminMake()
+    {
+        $user = $this->Users->newEntity();
+        if ($this->request->is('post')) {
+            $user = $this->Users->patchEntity($user, $this->request->getData());
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The user has been saved.'));
+                return $this->redirect(['action' => 'login']);
+            }
+            $this->Flash->error(__('Unable to add the user.'));
+        }
         $this->set('user', $user);
     }
 
@@ -55,7 +70,7 @@ class UsersController extends AppController {
                 return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Invalid mail or password, try again'));
-        } //TODO:elseを用意してここでログインがgetできたらtwitterのトークンで処理する
+        }
     }
 
     public function logout()
@@ -83,7 +98,8 @@ class UsersController extends AppController {
         $this->loadModel('Scores');
         $this->loadModel('Trophies');
         $this->loadModel('Users');
-
+        $this->loadModel('Notes');
+        $this->loadModel('NoteScores');
         // 対象ユーザー名取得
         $users = $this->Users->find('all', array('conditions' => array('Users.id' =>$target_id)));
         $row = $users->first();
@@ -108,70 +124,5 @@ class UsersController extends AppController {
         $this->set('trophies',$trophies);
     }
 
-    // twitterでのアカウント設定 todo:アカウント取得とログインの処理きりわけ
-    public function twitterLogin()
-    {
-
-        session_start();
-        define( 'CONSUMER_KEY', 'mVmdVb2x8hYkTz2ddVlvnEGS8' );
-        define( 'CONSUMER_SECRET', 'cEUVZ3IDLXxk1ih3nK05WSfNt1LGQSz3TJvoaGawKup8UFOtDM' );
-        define( 'OAUTH_CALLBACK', 'http://192.168.205.10/project/babylook/users/twitter_login' );
-        // twitter側でoauth_tokenを取得していればアクセストークン取得後にSNSログイン処理、出来ていなければリクエストトークンを取得してtwitter認証画面へ
-        if((array_key_exists('oauth_token', $_SESSION))){
-            //login.phpでセットしたセッション
-            $request_token = [];  // [] は array() の短縮記法。詳しくは以下の「追々記」参照
-            $request_token['oauth_token'] = $_SESSION['oauth_token'];
-            $request_token['oauth_token_secret'] = $_SESSION['oauth_token_secret'];
-
-            //Twitterから返されたOAuthトークンと、あらかじめlogin.phpで入れておいたセッション上のものと一致するかをチェック
-            if (isset($_REQUEST['oauth_token']) && $request_token['oauth_token'] !== $_REQUEST['oauth_token']) {
-                die( 'Error!' );
-            }
-
-            //OAuth トークンも用いて TwitterOAuth をインスタンス化
-            $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $request_token['oauth_token'], $request_token['oauth_token_secret']);
-
-            //アプリでは、access_token(配列になっています)をうまく使って、Twitter上のアカウントを操作していきます
-            $_SESSION['access_token'] = $connection->oauth("oauth/access_token", array("oauth_verifier" => $_REQUEST['oauth_verifier']));
-            /*
-            ちなみに、この変数の中に、OAuthトークンとトークンシークレットが配列となって入っています。
-            */
-            $access_token = $_SESSION['access_token'];
-            // ユーザープロファイル取得 正しければここでコケない
-            $user_connection = new  TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
-            $user = $user_connection->get("account/verify_credentials");
-            if ($user !=false){
-                echo "これが俺のリクエストトークンや<br>";
-                var_dump($_SESSION);
-                echo "<br><hr><br>";
-            }
-            print_r($user);
-            //todo:まずはこれでアカウント作成
-            // todo:  $access_token['oauth_token'],$access_token['oauth_token_secret'],$user['user_id'] この三つをセッションにいれて今度はaddに飛ばしてアカウントをとらせば、hidden経由で入る
-
-            //return $this->redirect(['action' => 'login']);
-            exit;
-        }
-
-        // TODO:http://atomicbox.tank.jp/website/cakephp/1290/ , https://twitteroauth.com/　この二つのマニュアルを見てログイン実装
-        // まずリクエストトークンを取ってtwitter認証画面にリダイレクトさせるだけ
-
-        //TwitterOAuth をインスタンス化
-        $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
-
-        //コールバックURLをここでセット
-        $request_token = $connection->oauth('oauth/request_token', array('oauth_callback' => OAUTH_CALLBACK));
-
-        //callback.phpで使うのでセッションに入れる
-        $_SESSION['oauth_token'] = $request_token['oauth_token'];
-        $_SESSION['oauth_token_secret'] = $request_token['oauth_token_secret'];
-
-        //Twitter.com 上の認証画面のURLを取得( この行についてはコメント欄も参照 )
-        $url = $connection->url('oauth/authenticate', array('oauth_token' => $request_token['oauth_token']));
-
-        //Twitter.com の認証画面へリダイレクト
-        header( 'location: '. $url );
-        exit;
-    }
 
 }

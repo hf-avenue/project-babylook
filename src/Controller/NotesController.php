@@ -17,7 +17,7 @@ use Michelf\MarkdownExtra;
 
 
 
-class NovelsController extends AppController {
+class NotesController extends AppController {
 
     public function initialize()
     {
@@ -33,12 +33,12 @@ class NovelsController extends AppController {
         // 全ユーザー投稿記事
         if ($user_id == null)
         {
-            $novels = $this->Novels->find('all')->contain(['Users']);
+            $notes = $this->Notes->find('all')->contain(['Users']);
 
         } else {
-            $novels = $this->Novels->find('all', array('conditions'=>array('Novels.user_id' => $user_id,)))->contain(['Users']);
+            $notes = $this->Notes->find('all', array('conditions'=>array('Notes.user_id' => $user_id,)))->contain(['Users']);
         }
-        $this->set(compact('novels'));
+        $this->set(compact('notes'));
     }
 
     /**
@@ -47,12 +47,12 @@ class NovelsController extends AppController {
     public function view($id = null)
     {
 
-        $novel = $this->Novels->get($id);
-        $user_id =$novel->user_id;
-        $user = $this->Novels->find('all', array('conditions'=>array('Novels.user_id' => $user_id)))->contain(['Users']);
-        $novel->body = MarkdownExtra::defaultTransform($novel->body);
+        $note = $this->Notes->get($id);
+        $user_id =$note->user_id;
+        $user = $this->Notes->find('all', array('conditions'=>array('Notes.user_id' => $user_id)))->contain(['Users']);
+        $note->body = MarkdownExtra::defaultTransform($note->body);
         $user =$user->first();
-        $this->set(compact('novel', 'user'));
+        $this->set(compact('note', 'user'));
     }
 
 /**
@@ -60,22 +60,22 @@ class NovelsController extends AppController {
  */
     public function add()
     {
-        $novel = $this->Novels->newEntity();
+        $note = $this->Notes->newEntity();
         if ($this->request->is('post')) {
-            $novel = $this->Novels->patchEntity($novel, $this->request->getData());
+            $note = $this->Notes->patchEntity($note, $this->request->getData());
             // 投稿者IDを追記
-            $novel->user_id = $this->Auth->user('id');
+            $note->user_id = $this->Auth->user('id');
             // 保存処理
-            if ($this->Novels->save($novel)) {
-                $this->Flash->success(__('Your novel has been saved.'));
+            if ($this->Notes->save($note)) {
+                $this->Flash->success(__('Your note has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('Unable to add your novel.'));
+            $this->Flash->error(__('Unable to add your note.'));
         }
-        $this->set('novel', $novel);
+        $this->set('note', $note);
     }
 
-    public function vote($novels_id = null)
+    public function vote($notes_id = null)
     {
         // 画面表示は行わない
         $this->autoRender = false;
@@ -89,29 +89,28 @@ class NovelsController extends AppController {
 
         if ($this->request->is('post')){
             // ここから別モデルをロード
-            $this->loadModel('NovelScores');
+            $this->loadModel('Notescores');
 
             // エンティティ生成
-            $scores = $this->NovelScores->newEntity();
+            $scores = $this->Notescores->newEntity();
 
             // 時刻セット
             $timestamp = date('Y-m-d H:i:s');
             $scores->created = $timestamp;
 
-
             // 有効な投稿作品IDであるか確認
-            $novels = $this->Novels->find()->where(['Novels.id' => $novels_id])->first();
-            if ($novels==null){
+            $notes = $this->Notes->find()->where(['Notes.id' => $notes_id])->first();
+            if ($notes==null){
                 return false;
             }
 
             // 作品ID、評価者ID、投票者IDをセット
             $scores->exam_user_id = $user_id;
-            $scores->target_user_id = $novels['user_id'];
-            $scores->novels_id =  $novels['id'];
+            $scores->target_user_id = $notes['user_id'];
+            $scores->notes_id =  $notes['id'];
 
             // 保存するよ
-            if ($this->NovelScores->save($scores)) {
+            if ($this->Notescores->save($scores)) {
                 // $this->Flash->success(__('投票ありがとうございます'));
             }
         }

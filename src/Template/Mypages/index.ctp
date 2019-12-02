@@ -1,6 +1,6 @@
 <meta charset="UTF-8"/>
 
-<h1>Babylook Portal2 proto type system</h1>
+<h1>sns  Portal2 proto type system</h1>
 
 <table>
     <tr>
@@ -12,7 +12,7 @@
     <tr>
         <th><h6><?= $this->Html->link('プロフィール更新', ['action' => 'edit']) ?></h6></th>
         <th><h6><?= $this->Html->link('画像を投稿', ['controller' =>'articles' ,'action' => 'add']) ?></h6></th>
-        <th><h6><?= $this->Html->link('小説を投稿', ['controller' =>'novels' ,'action' => 'add']) ?></h6></th>
+        <th><h6><?= $this->Html->link('ノートを投稿', ['controller' =>'notes' ,'action' => 'add']) ?></h6></th>
 
     </tr>
 
@@ -53,7 +53,6 @@
     </tr>
 
     <?php foreach ($missions as $mission): ?>
-    <!-- todo:仮仕様として、ユーザーに発行されたミッションの全てを出し、Ｘ／Ｙで進捗率を出しています。％にする場合は応相談でお願いします 2017/06/14-->
             <td>ミッション番号<?= $mission->mission_master->id ?></td>
             <td>ミッション名<?= $mission->mission_master->mission_name  ?></td>
             <td>ミッション内容<?= $mission->mission_master->mission_description ?></td>
