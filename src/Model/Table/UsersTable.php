@@ -23,7 +23,7 @@ class UsersTable  extends Table {
     public function validationDefault(Validator $validator)
     {
         return $validator
-            ->notEmpty('username', 'A mail is required')
+            ->notEmpty('username', 'A name is required')
             ->notEmpty('mail', 'A mail is required')
             ->notEmpty('password', 'A password is required')
             ->notEmpty('role', 'A role is required')
