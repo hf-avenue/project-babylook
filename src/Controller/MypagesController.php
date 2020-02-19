@@ -17,7 +17,7 @@ use Cake\Datasource\ConnectionManager;
 
 class MypagesController extends AppController {
     // 一覧表示
-    
+    public $components = array('Paginator', 'Flash');
     public function index()
     {
         // ログインチェック

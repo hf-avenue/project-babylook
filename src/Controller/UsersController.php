@@ -13,7 +13,7 @@ use Cake\Network\Http\Client;
 use Abraham\TwitterOAuth\TwitterOAuth;
 
 class UsersController extends AppController {
-
+    public $components = array('Paginator', 'Flash');
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);

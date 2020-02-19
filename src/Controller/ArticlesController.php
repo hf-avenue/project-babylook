@@ -14,7 +14,7 @@ use Cake\Routing\Router;
 
 
 class ArticlesController extends AppController {
-
+    public $components = array('Paginator', 'Flash');
     public function initialize()
     {
         parent::initialize();

@@ -2,7 +2,7 @@
     <?= $this->Form->create($user) ?>
     <fieldset>
         <legend><?= __('Add User') ?></legend>
-        <?= $this->Form->control('username') ?>
+        <?= $this->Form->control('user_name') ?>
         <?= $this->Form->control('mail') ?>
         <?= $this->Form->control('password') ?>
         <?= $this->Form->control('role', [

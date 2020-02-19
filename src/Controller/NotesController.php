@@ -18,7 +18,7 @@ use Michelf\MarkdownExtra;
 
 
 class NotesController extends AppController {
-
+    public $components = array('Paginator', 'Flash');
     public function initialize()
     {
         parent::initialize();

@@ -10,6 +10,7 @@ namespace App\Controller;
 
 
 class RegistsController extends AppController {
+    public $components = array('Paginator', 'Flash');
     public function index()
     {
 
