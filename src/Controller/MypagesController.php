@@ -28,13 +28,13 @@ class MypagesController extends AppController {
         }
 
         // ここから各モデルをロード　(トロフィーを基準にした処理が必要ならここから先のロジックをコピーするか共通化)
-        $this->loadModel('Articles');
-        $this->loadModel('Scores');
-        $this->loadModel('Trophies');
+        //$this->loadModel('Articles');
+        //$this->loadModel('Scores');
+        //$this->loadModel('Trophies');
         $this->loadModel('Users');
-        $this->loadModel('MissionMasters');
-        $this->loadModel('UserMissionStatuses');
-        $this->loadModel('UserProfiles');
+        //$this->loadModel('MissionMasters');
+        //$this->loadModel('UserMissionStatuses');
+        //$this->loadModel('UserProfiles');
 
 
         // ユーザー名取得
@@ -43,6 +43,7 @@ class MypagesController extends AppController {
         $this->set('users',$row);
 
         // プロフィール取得
+        /*
         $profiles = $this->UserProfiles->find('all', array('conditions' => array('UserProfiles.user_id' =>$user_id)));
         $profile = $profiles->first();
         $this->set('profile',$profile);
@@ -84,7 +85,7 @@ class MypagesController extends AppController {
         $missions = $this->UserMissionStatuses->find('all', array('conditions'=>array('UserMissionStatuses.user_id' => $user_id,)))->contain(['MissionMasters']);
         $this->set('missions',$missions);
         // ここまで
-
+        */
     }
 
     // プロフィールの自己紹介欄を入力する画面
