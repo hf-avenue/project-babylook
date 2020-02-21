@@ -39,9 +39,18 @@ class AppController extends Controller
      */
     public function initialize()
     {
-        // 既存のコード
 
+        $this->loadComponent('Flash');
         $this->loadComponent('Auth', [
+            'loginRedirect' => [
+                'controller' => 'Mypages',
+                'action' => 'index'
+            ],
+            'logoutRedirect' => [
+                'controller' => 'Users',
+                'action' => 'login',
+
+            ],
             'authenticate' => [
                 'Form' => [
                     'fields' => [
@@ -50,19 +59,21 @@ class AppController extends Controller
                     ]
                 ]
             ],
-            'loginAction' => [
-                'controller' => 'Users',
-                'action' => 'login'
-            ],
-            // コントローラーで isAuthorized を使用します
-            'authorize' => ['Controller'],
-            // 未認証の場合、直前のページに戻します
-            'unauthorizedRedirect' => $this->referer()
         ]);
+        $this->loadComponent('RequestHandler');
 
-        // display アクションを許可して、PagesController が引き続き
-        // 動作するようにします。また、読み取り専用のアクションを有効にします。
-        $this->Auth->allow(['display', 'view', 'index']);
+        /*
+                parent::initialize();
+
+                $this->loadComponent('RequestHandler');
+                $this->loadComponent('Flash');
+        */
+        /*
+         * Enable the following components for recommended CakePHP security settings.
+         * see http://book.cakephp.org/3.0/en/controllers/components/security.html
+         */
+        //$this->loadComponent('Security');
+        //$this->loadComponent('Csrf');
     }
 
     public function beforeFilter(Event $event)
