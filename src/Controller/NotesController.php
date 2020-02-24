@@ -25,11 +25,16 @@ class NotesController extends AppController {
         $this->loadComponent('RequestHandler');
     }
 
-
-
     // 一覧表示
     public function index($user_id = null)
     {
+        // ログインチェック
+        $user_id = $this->Auth->user('id');
+        if ($user_id ==null)
+        {
+            return $this->redirect($this->Auth->redirectUrl('/users/login'));
+        }
+
         // 全ユーザー投稿記事
         if ($user_id == null)
         {
@@ -41,11 +46,16 @@ class NotesController extends AppController {
         $this->set(compact('notes'));
     }
 
-    /**
-     * @param null $id
-     */
+    // 特定投稿閲覧
     public function view($id = null)
     {
+
+        // ログインチェック
+        $user_id = $this->Auth->user('id');
+        if ($user_id ==null)
+        {
+            return $this->redirect($this->Auth->redirectUrl('/users/login'));
+        }
 
         $note = $this->Notes->get($id);
         $user_id =$note->user_id;

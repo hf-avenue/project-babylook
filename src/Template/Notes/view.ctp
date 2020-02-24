@@ -1,7 +1,7 @@
 <h1>タイトル：<?= h($note->title) ?></h1>
 <h2>作者：<?= $this->Html->link($user->user->username,['controller' =>'users' ,'action' => 'profile', $note->user_id]);?>
     <p>コンテンツ内容：</p>
-    <div><?php echo  $note->body; ?></div>
+    <div><pre><?php echo  $note->body; ?></pre></div>
 <br/>
 
 
