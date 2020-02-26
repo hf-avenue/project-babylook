@@ -34,16 +34,27 @@ class UsersController extends AppController {
     // ユーザーアカウント取得
     public function add()
     {
+
+
         // ユーザーテーブル接続
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
-            // ユーザーテーブルとプロフィールテーブルをアソシエイト
-            $user = $this->Users->patchEntity($user, $this->request->getData());
+
             // ユーザーテーブル保存
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-                return $this->redirect(['action' => 'login']);
+                $user_id = $user->id;
             }
+
+            // プロフィール生成準備
+            $this->loadModel('Profiles');
+            $profiles = $this->Profiles->newEntity();
+            $profiles->user_id = $user_id;
+            $this->Profiles->save($profiles);
+            $this->Flash->success(__('The user has been saved.'));
+            return $this->redirect(['action' => 'login']);
+
+
+            // エラーメッセージ
             $this->Flash->error(__('Unable to add the user.'));
         }
         $this->set('user', $user);
