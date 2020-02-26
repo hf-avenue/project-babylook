@@ -18,6 +18,7 @@ class UsersTable  extends Table {
     public function initialize(array $config)
     {
         $this->addBehavior('Timestamp');
+
     }
 
     public function validationDefault(Validator $validator)
@@ -26,11 +27,6 @@ class UsersTable  extends Table {
             ->notEmpty('username', 'A name is required')
             ->notEmpty('mail', 'A mail is required')
             ->notEmpty('password', 'A password is required')
-            ->notEmpty('role', 'A role is required')
-            ->add('role', 'inList', [
-                'rule' => ['inList', ['admin', 'author']],
-                'message' => 'Please enter a valid role'
-            ])
             ->add('mail', 'unique', ['rule' => 'validateUnique', 'provider' => 'table', 'message' => 'すでに使われています']);
 
     }
