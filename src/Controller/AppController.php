@@ -53,27 +53,29 @@ class AppController extends Controller
             ],
             'authenticate' => [
                 'Form' => [
-                    'fields' => [
+                  // ここは仕様だから変更しない
+                        'fields' => [
                         'username' => 'mail',
                         'password' => 'password'
+
                     ]
                 ]
             ],
         ]);
         $this->loadComponent('RequestHandler');
 
-/*
+
         parent::initialize();
 
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
-*/
+
         /*
          * Enable the following components for recommended CakePHP security settings.
          * see http://book.cakephp.org/3.0/en/controllers/components/security.html
          */
-        //$this->loadComponent('Security');
-        //$this->loadComponent('Csrf');
+        $this->loadComponent('Security');
+        $this->loadComponent('Csrf');
     }
 
     public function beforeFilter(Event $event)
