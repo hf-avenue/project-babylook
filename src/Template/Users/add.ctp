@@ -6,11 +6,10 @@
         <input type="hidden" name="twitter_id" value="1234"><!--todo:実際は$_SESSIONに入れて取れよ ダミーコードだぞ、後で消す -->
         <input type="hidden" name="oauth_token" value="hogehogehogehoge"><!--ダミーコードだぞ、後で消す -->
         <input type="hidden" name="oauth_token_secret" value="hogehogehogehoge"><!--ダミーコードだぞ、後で消す -->
+        <?= $this->Form->control('user_name') ?>
         <?= $this->Form->control('mail') ?>
         <?= $this->Form->control('password') ?>
-        <?= $this->Form->control('role', [
-            'options' => ['admin' => 'Admin', 'author' => 'Author']
-        ]) ?>
+
     </fieldset>
     <?= $this->Form->button(__('Submit')); ?>
     <?= $this->Form->end() ?>

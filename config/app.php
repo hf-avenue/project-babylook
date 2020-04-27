@@ -230,8 +230,10 @@ return [
              */
             //'port' => 'non_standard_port_number',
             'username' => 'root',
-            'password' => 'babylook',
-            'database' => 'babylook',
+            // 'password' => 'sns',
+            'database' => 'sns',
+            // 'password' => 'sns',
+            'database' => 'sns',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],
