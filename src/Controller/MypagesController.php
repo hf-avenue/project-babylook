@@ -17,7 +17,7 @@ use Cake\Datasource\ConnectionManager;
 
 class MypagesController extends AppController {
     // 一覧表示
-    
+
     public function index()
     {
         // ログインチェック
@@ -46,6 +46,7 @@ class MypagesController extends AppController {
         $profiles = $this->UserProfiles->find('all', array('conditions' => array('UserProfiles.user_id' =>$user_id)));
         $profile = $profiles->first();
         $this->set('profile',$profile);
+
 
         // ログインユーザーIDで投稿をソート
         $articles = $this->Articles->find('all', array('conditions'=>array('Articles.user_id' => $user_id,)));

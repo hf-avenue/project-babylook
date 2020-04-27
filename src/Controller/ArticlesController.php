@@ -123,10 +123,6 @@ class ArticlesController extends AppController {
      * @param null $articles_id
      * @return \Cake\Network\Response|null
      */
-
-
-
-
     public function vote($articles_id = null)
     {
         // 画面表示は行わない

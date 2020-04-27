@@ -4,7 +4,7 @@
 
 <table>
     <tr>
-        <th><h5>あなたの名前：</h5></th><th><h5><?= $users->username ?></h5></th>
+        <th><h5>あなたの名前：</h5></th><th><h5><?= $users->user_name ?></h5></th>
     </tr>
     <tr>
         <th><?= $this->Html->image('/img/default_icon.jpg'); ?></th>
@@ -12,7 +12,7 @@
     <tr>
         <th><h6><?= $this->Html->link('プロフィール更新', ['action' => 'edit']) ?></h6></th>
         <th><h6><?= $this->Html->link('画像を投稿', ['controller' =>'articles' ,'action' => 'add']) ?></h6></th>
-        <th><h6><?= $this->Html->link('小説を投稿', ['controller' =>'novels' ,'action' => 'add']) ?></h6></th>
+        <th><h6><?= $this->Html->link('文章を投稿', ['controller' =>'novels' ,'action' => 'add']) ?></h6></th>
 
     </tr>
 
@@ -40,7 +40,7 @@
     <tr>
         <th><h5>プロフィール</h5></th>
         <th>
-            <?php if($profile->body){
+            <?php if($profile){
                 echo nl2br(h($profile->body));
             } ?>
 
