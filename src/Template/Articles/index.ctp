@@ -32,7 +32,7 @@
                 <?php if ($image_number != null){
                     echo ($this->Html->image('/img/thumbnail/'.$image_number.".png"));
                 }; ?>
-            <td><?= $article->created->format(DATE_RFC850) ?></td>
+            <td><?= $article->created->format('Y: m: d: H: i') ?></td>
         </tr>
     <?php endforeach; ?>
 </table>

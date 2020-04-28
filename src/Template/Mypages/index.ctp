@@ -105,7 +105,7 @@
             </th>
 
             <td>
-                <?= $article->created->format(DATE_RFC850) ?>
+                <?= $article->created->format('Y: m: d: H: i') ?>
             </td>
         </tr>
     <?php endforeach; ?>
