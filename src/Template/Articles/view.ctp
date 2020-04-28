@@ -1,6 +1,7 @@
 <h1>タイトル：<?= h($article->title) ?></h1>
-<h2>作者：<?= $this->Html->link($user->user->username,['controller' =>'users' ,'action' => 'profile', $article->user_id]);?><p>コンテンツ内容：<?= h($article->body) ?></p>
-<br/>
+<h2>作者：<?= $this->Html->link($user->user->user_name,['controller' =>'users' ,'action' => 'profile', $article->user_id]);?></h2>
+    <p>コンテンツ内容：</p>
+    <?= nl2br($article->body) ?>
 <?php echo $this->Html->script('jquery-3.2.1.min.js'); ?>
 
 <div><?php echo $this->Html->image('gj_before.png', ['id'=>$article->id, 'alt' =>'イイネ' ]); ?></div>
