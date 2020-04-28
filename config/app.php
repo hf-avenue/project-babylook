@@ -235,7 +235,7 @@ return [
             // 'password' => 'sns',
             'database' => 'sns',
             'encoding' => 'utf8',
-            'timezone' => 'UTC',
+            'timezone' => 'Asia/Tokyo',
             'flags' => [],
             'cacheMetadata' => true,
             'log' => true,

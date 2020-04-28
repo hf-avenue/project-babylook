@@ -21,7 +21,7 @@ if (version_compare(PHP_VERSION, '5.6.0') < 0) {
 /*
  *  You can remove this if you are confident you have intl installed.
  */
- 
+
 
 if (!extension_loaded('intl')) {
     trigger_error('You must enable the intl extension to use CakePHP.', E_USER_ERROR);
@@ -101,7 +101,7 @@ if (Configure::read('debug')) {
  * Set server timezone to UTC. You can change it to another timezone of your
  * choice but using UTC makes time calculations / conversions easier.
  */
-date_default_timezone_set('UTC');
+date_default_timezone_set('Asia/Tokyo');
 
 /*
  * Configure the mbstring extension to use the correct encoding.
