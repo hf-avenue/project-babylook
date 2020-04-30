@@ -41,8 +41,8 @@
 *.otf binary
 *.eot binary
 
-*.ctp linguist-language=php
-*.js linguist-vendored=false
-*.json linguist-vendored=false
+*.ctp linguist-language=PHP
+*.js linguist-language=PHP
+*.json linguist-language=PHP
 plugins/* linguist-documentation
 webroot/* linguist-documentation
